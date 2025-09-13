@@ -456,7 +456,7 @@ def main():
     
     with col3:
         if st.button("🔄 Refresh Analysis"):
-            st.experimental_rerun()
+            st.rerun()
     
     # Footer
     st.markdown("---")

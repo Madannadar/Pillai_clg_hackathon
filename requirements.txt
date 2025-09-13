@@ -1,0 +1,12 @@
+streamlit==1.28.0
+pandas==2.1.0
+matplotlib==3.7.2
+folium==0.14.0
+streamlit-folium==0.15.0
+plotly==5.15.0
+numpy==1.24.3
+
+# For future LangGraph integration (optional)
+# langgraph==0.0.20
+# langchain==0.0.350
+# openai==1.3.0

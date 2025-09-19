@@ -45,7 +45,7 @@ export default function Navbar() {
                     NGOs
                 </NavLink>
                 <NavLink
-                    to="profile"
+                    to="dashboard/profile"
                     className={({ isActive }) =>
                         `px-3 py-1 rounded-lg transition-colors duration-200 ${isActive
                             ? "bg-white text-green-700 font-semibold"

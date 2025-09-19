@@ -10,6 +10,7 @@ import authRoutes from "./routes/authRoutes.js";
 import ngoRoutes from "./routes/ngoRoutes.js"
 import fundraisingRoutes from "./routes/fundraisingRoutes.js"
 dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());

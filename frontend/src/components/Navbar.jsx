@@ -12,7 +12,7 @@ export default function Navbar() {
             {/* Links */}
             <div className="flex gap-4 sm:gap-6">
                 <NavLink
-                    to="weather"
+                    to="/weather"
                     className={({ isActive }) =>
                         `px-3 py-1 rounded-lg transition-colors duration-200 ${isActive
                             ? "bg-white text-green-700 font-semibold"
@@ -23,7 +23,7 @@ export default function Navbar() {
                     Weather
                 </NavLink>
                 <NavLink
-                    to="plants"
+                    to="/plants"
                     className={({ isActive }) =>
                         `px-3 py-1 rounded-lg transition-colors duration-200 ${isActive
                             ? "bg-white text-green-700 font-semibold"
@@ -34,7 +34,7 @@ export default function Navbar() {
                     My Plants
                 </NavLink>
                 <NavLink
-                    to="ngos"
+                    to="/ngos"
                     className={({ isActive }) =>
                         `px-3 py-1 rounded-lg transition-colors duration-200 ${isActive
                             ? "bg-white text-green-700 font-semibold"
@@ -45,7 +45,7 @@ export default function Navbar() {
                     NGOs
                 </NavLink>
                 <NavLink
-                    to="profile"
+                    to="/profile"
                     className={({ isActive }) =>
                         `px-3 py-1 rounded-lg transition-colors duration-200 ${isActive
                             ? "bg-white text-green-700 font-semibold"

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronRight, Leaf, Brain, BarChart3, Globe, Droplets, TreePine, Zap, CheckCircle, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function ArjunaLanding() {
+
+    const navigate = useNavigate();
+    
     const [scrollY, setScrollY] = useState(0);
     const [currentFeature, setCurrentFeature] = useState(0);
 
@@ -82,7 +86,7 @@ export default function ArjunaLanding() {
                         Arjuna.exe
                     </span>
                 </div>
-                <button className="px-6 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <button onClick={()=>navigate('/login')}  className="px-6 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300">
                     Get Started
                 </button>
             </nav>

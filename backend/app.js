@@ -7,7 +7,9 @@ import weatherRoutes from "./routes/weatherRoutes.js";
 import greenCoverRoutes from "./routes/greenCoverRoutes.js";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
+import plantRoutes from "./routes/plantRoutes.js"
 dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
@@ -20,6 +22,7 @@ connectDB();
 app.use("/api/weather", weatherRoutes);
 app.use("/api/green-cover", greenCoverRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/plant",plantRoutes)
 
 // ✅ Root route
 app.get("/", (req, res) => {

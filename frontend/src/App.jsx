@@ -13,7 +13,7 @@ import Home from './pages/Home';
 import NGODashboard from './pages/NogDashboard';
 import ProfilePage from './pages/ProfilePage';
 import NGOPage from './pages/NGOPage';
-import PlantsPage from './pages/PlantsPage';
+import Planting from './pages/Planting';
 import WeatherPage from './pages/WeatherPage';
 import DonatePage from "./components/DonatePage";
 import CreateCampaign from "./components/CreateCampaign";
@@ -37,7 +37,7 @@ const App = () => {
         <Route path="/dashboard" element={<NGODashboard />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/ngos' element={<NGOPage />} />
-        <Route path='/plants' element={<PlantsPage />} />
+        <Route path='/planting' element={<Planting />} />
         <Route path='/weather' element={<WeatherPage />} />
         <Route path="/donate/:campaignId" element={<DonatePage />} />
         <Route path="/create-campaign" element={<CreateCampaign />} />

@@ -27,3 +27,9 @@ class PlantHealthFeatures(BaseModel):
 class PredictionResponse(BaseModel):
     """Defines the structure of the prediction response."""
     predicted_avg_ndvi: float
+
+
+class LocationYearRequest(BaseModel):
+    """Defines the input features for raster processing endpoints."""
+    location: str = Field(..., example="Kalyan", description="The name of the location.")
+    year: int = Field(..., example=2018, description="The year of the satellite imagery.")

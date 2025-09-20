@@ -1,3 +1,4 @@
+// import { useState } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../services/api";
@@ -62,20 +63,20 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-green-100 via-emerald-50 to-teal-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-green-900">
           Create your account
         </h2>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <div className="bg-white py-8 px-4 shadow-xl border border-green-100 sm:rounded-xl sm:px-10">
           <div className="space-y-6">
 
             {/* Account Type */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">Account Type</label>
+              <label className="block text-sm font-medium text-green-800 mb-3">Account Type</label>
               <div className="grid grid-cols-2 gap-3">
                 <div className="flex items-center">
                   <input
@@ -85,9 +86,9 @@ export default function Register() {
                     value="user"
                     checked={form.type === "user"}
                     onChange={handleChange}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-green-300"
                   />
-                  <label htmlFor="user-reg" className="ml-2 block text-sm text-gray-900">User</label>
+                  <label htmlFor="user-reg" className="ml-2 block text-sm text-green-900">User</label>
                 </div>
                 <div className="flex items-center">
                   <input
@@ -97,16 +98,16 @@ export default function Register() {
                     value="ngo"
                     checked={form.type === "ngo"}
                     onChange={handleChange}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-green-300"
                   />
-                  <label htmlFor="ngo-reg" className="ml-2 block text-sm text-gray-900">NGO</label>
+                  <label htmlFor="ngo-reg" className="ml-2 block text-sm text-green-900">NGO</label>
                 </div>
               </div>
             </div>
 
             {/* Common Fields */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="name" className="block text-sm font-medium text-green-800">
                 {form.type === "ngo" ? "NGO Name" : "Full Name"}
               </label>
               <input
@@ -117,12 +118,12 @@ export default function Register() {
                 placeholder={form.type === "ngo" ? "Enter NGO name" : "Enter full name"}
                 value={form.name}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-green-300 rounded-md placeholder-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email address</label>
+              <label htmlFor="email" className="block text-sm font-medium text-green-800">Email address</label>
               <input
                 id="email"
                 name="email"
@@ -131,12 +132,12 @@ export default function Register() {
                 placeholder="Enter email address"
                 value={form.email}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-green-300 rounded-md placeholder-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+              <label htmlFor="password" className="block text-sm font-medium text-green-800">Password</label>
               <input
                 id="password"
                 name="password"
@@ -145,7 +146,7 @@ export default function Register() {
                 placeholder="Create a password"
                 value={form.password}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-1 block w-full px-3 py-2 border border-green-300 rounded-md placeholder-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
               />
             </div>
 
@@ -153,7 +154,7 @@ export default function Register() {
             {form.type === "ngo" && (
               <>
                 <div>
-                  <label htmlFor="registrationNumber" className="block text-sm font-medium text-gray-700">Registration Number</label>
+                  <label htmlFor="registrationNumber" className="block text-sm font-medium text-green-800">Registration Number</label>
                   <input
                     id="registrationNumber"
                     name="registrationNumber"
@@ -162,12 +163,12 @@ export default function Register() {
                     placeholder="Enter government registration number"
                     value={form.registrationNumber}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="mt-1 block w-full px-3 py-2 border border-green-300 rounded-md placeholder-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="contactNumber" className="block text-sm font-medium text-gray-700">Contact Number</label>
+                  <label htmlFor="contactNumber" className="block text-sm font-medium text-green-800">Contact Number</label>
                   <input
                     id="contactNumber"
                     name="contactNumber"
@@ -175,12 +176,12 @@ export default function Register() {
                     placeholder="Enter contact number"
                     value={form.contactNumber}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="mt-1 block w-full px-3 py-2 border border-green-300 rounded-md placeholder-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
+                  <label htmlFor="address" className="block text-sm font-medium text-green-800">Address</label>
                   <textarea
                     id="address"
                     name="address"
@@ -188,12 +189,12 @@ export default function Register() {
                     placeholder="Enter complete address"
                     value={form.address}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="mt-1 block w-full px-3 py-2 border border-green-300 rounded-md placeholder-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="website" className="block text-sm font-medium text-gray-700">Website (Optional)</label>
+                  <label htmlFor="website" className="block text-sm font-medium text-green-800">Website (Optional)</label>
                   <input
                     id="website"
                     name="website"
@@ -201,7 +202,7 @@ export default function Register() {
                     placeholder="https://yourwebsite.org"
                     value={form.website}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="mt-1 block w-full px-3 py-2 border border-green-300 rounded-md placeholder-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                   />
                 </div>
               </>
@@ -213,14 +214,14 @@ export default function Register() {
                 type="submit"
                 onClick={handleSubmit}
                 disabled={loading}
-                className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white transition duration-150 ease-in-out ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'}`}
+                className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white transition duration-150 ease-in-out ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'}`}
               >
                 {loading ? "Creating Account..." : `Create ${form.type === "ngo" ? "NGO" : "User"} Account`}
               </button>
             </div>
 
             <div className="mt-2 text-center text-sm">
-              <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500">
+              <Link to="/login" className="font-medium text-green-600 hover:text-green-500">
                 Already have an account? Login
               </Link>
             </div>

@@ -21,6 +21,18 @@ const fundraisingSchema = new mongoose.Schema({
         donatedAt: { type: Date, default: Date.now }
     }],
 
+    images: [{ type: String }], // 🔹 Cloudinary image URLs stored here
+
+    // Verification fields
+    isVerified: { type: Boolean, default: false },
+    verificationStatus: {
+        type: String,
+        enum: ["pending", "approved", "rejected"],
+        default: "pending"
+    },
+    verifiedAt: { type: Date },
+    rejectionReason: { type: String },
+
     createdAt: { type: Date, default: Date.now }
 });
 

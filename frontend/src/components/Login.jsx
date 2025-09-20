@@ -25,13 +25,34 @@ export default function Login() {
                 password: form.password,
             });
 
-            // Save tokens
-            localStorage.setItem("accessToken", res.data.accessToken);
-            localStorage.setItem("refreshToken", res.data.refreshToken);
-            localStorage.setItem("userType", form.type);
+            // 🔹 For NGO login
+            if (form.type === "ngo") {
+                localStorage.setItem("token", res.data.token); // store JWT
+                localStorage.setItem("ngoId", res.data.ngo._id); // optional for creating campaigns
+                localStorage.setItem("userType", "ngo");
+                navigate("/dashboard");
+            } else {
+                // For normal user login - check if admin
+                localStorage.setItem("accessToken", res.data.accessToken);
+                localStorage.setItem("refreshToken", res.data.refreshToken);
+                localStorage.setItem("user", JSON.stringify(res.data.user));
+                
+                // Check if user is admin
+                if (res.data.user.role === "admin") {
+                    localStorage.setItem("userType", "admin");
+                    navigate("/admin"); // Redirect to admin panel
+                } else {
+                    localStorage.setItem("userType", "user");
+                    navigate("/home"); // Redirect to user home
+                }
+            }
+
+            // 🔹 Log to check stored values
+            console.log("Token stored:", localStorage.getItem("token"));
+            console.log("NGO ID stored:", localStorage.getItem("ngoId"));
+            console.log("User type stored:", localStorage.getItem("userType"));
 
             setMessage("Login successful!");
-            navigate("/dashboard"); // Redirect to /home
 
         } catch (err) {
             setMessage(err.response?.data?.error || "Login failed");
@@ -41,20 +62,20 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gradient-to-br from-green-100 via-emerald-50 to-teal-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                <h2 className="mt-6 text-center text-3xl font-extrabold text-green-900">
                     Sign in to your account
                 </h2>
             </div>
 
             <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-                <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+                <div className="bg-white py-8 px-4 shadow-xl border border-green-100 sm:rounded-xl sm:px-10">
                     <div className="space-y-6">
 
                         {/* Account Type */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-3">
+                            <label className="block text-sm font-medium text-green-800 mb-3">
                                 Account Type
                             </label>
                             <div className="grid grid-cols-2 gap-3">
@@ -67,9 +88,9 @@ export default function Login() {
                                             value={type}
                                             checked={form.type === type}
                                             onChange={handleChange}
-                                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                                            className="h-4 w-4 text-green-600 focus:ring-green-500 border-green-300"
                                         />
-                                        <label htmlFor={type} className="ml-2 block text-sm text-gray-900">
+                                        <label htmlFor={type} className="ml-2 block text-sm text-green-900">
                                             {type === "ngo" ? "NGO" : "User"}
                                         </label>
                                     </div>
@@ -79,7 +100,7 @@ export default function Login() {
 
                         {/* Email */}
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="email" className="block text-sm font-medium text-green-800">
                                 Email address
                             </label>
                             <div className="mt-1">
@@ -91,14 +112,14 @@ export default function Login() {
                                     placeholder="Enter your email"
                                     value={form.email}
                                     onChange={handleChange}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    className="appearance-none block w-full px-3 py-2 border border-green-300 rounded-md placeholder-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                                 />
                             </div>
                         </div>
 
                         {/* Password */}
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                            <label htmlFor="password" className="block text-sm font-medium text-green-800">
                                 Password
                             </label>
                             <div className="mt-1">
@@ -110,7 +131,7 @@ export default function Login() {
                                     placeholder="Enter your password"
                                     value={form.password}
                                     onChange={handleChange}
-                                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                    className="appearance-none block w-full px-3 py-2 border border-green-300 rounded-md placeholder-green-400 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
                                 />
                             </div>
                         </div>
@@ -123,7 +144,7 @@ export default function Login() {
                                 disabled={loading}
                                 className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white transition duration-150 ease-in-out ${loading
                                     ? "bg-gray-400 cursor-not-allowed"
-                                    : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                    : "bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                     }`}
                             >
                                 {loading ? "Signing in..." : `Sign in as ${form.type === "ngo" ? "NGO" : "User"}`}
@@ -132,10 +153,10 @@ export default function Login() {
 
                         {/* Links */}
                         <div className="flex items-center justify-between text-sm">
-                            <Link to="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
+                            <Link to="/forgot-password" className="font-medium text-green-600 hover:text-green-500">
                                 Forgot your password?
                             </Link>
-                            <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
+                            <Link to="/register" className="font-medium text-green-600 hover:text-green-500">
                                 Create new account
                             </Link>
                         </div>

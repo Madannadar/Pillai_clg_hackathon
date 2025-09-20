@@ -7,12 +7,15 @@ This project contains a **FastAPI wrapper** for a machine learning model trained
 ## ⚙️ Setup
 
 ### 1. Place Files
+
 Ensure the following files are in the same directory:
+
 - `main.py` (the API code)
 - `requirements.txt` (the dependencies)
 - `plant_health_monthly_model-1000.pkl` (your trained model file)
 
 ### 2. Install Dependencies
+
 Open your terminal in the project directory and run:
 
 ```bash
@@ -29,9 +32,9 @@ Start the server with:
 uvicorn main:app --reload
 ```
 
-* `main` → refers to the `main.py` file
-* `app` → refers to the `app = FastAPI()` object inside `main.py`
-* `--reload` → enables auto-reloading when code changes
+- `main` → refers to the `main.py` file
+- `app` → refers to the `app = FastAPI()` object inside `main.py`
+- `--reload` → enables auto-reloading when code changes
 
 ---
 
@@ -63,8 +66,3 @@ FastAPI provides built-in Swagger docs for easy testing.
 ---
 
 ✅ Your API is now ready to use!
-
-```
-
-Do you also want me to include an **example JSON request body** for `/predict` (with sample weather data) so users can test it right away?
-```

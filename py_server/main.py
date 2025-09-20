@@ -86,7 +86,7 @@ async def reclassify_ndvi(file: UploadFile = File(...)):
             plt.savefig(output_buffer, format='png', bbox_inches='tight')
             plt.close(fig)
             output_buffer.seek(0)
-            return StreamingResponse(output_buffer, media_type="image/png", headers={"Content-Disposition": f"inline; filename=reclassified_{file.filename.replace('.tif', '.png')}"})
+            return StreamingResponse(output_buffer, media_type="image/png", headers={"Content-Disposition": f"attachment; filename=reclassified_{file.filename.replace('.tif', '.png')}"})
 
     except rasterio.RasterioIOError:
         raise HTTPException(status_code=422, detail="Could not read the raster file. Please ensure it is a valid GeoTIFF.")
@@ -131,7 +131,7 @@ async def calculate_ndvi_change(
         plt.savefig(output_buffer, format='png', bbox_inches='tight')
         plt.close(fig)
         output_buffer.seek(0)
-        return StreamingResponse(output_buffer, media_type="image/png", headers={"Content-Disposition": f"inline; filename=change_map.png"})
+        return StreamingResponse(output_buffer, media_type="image/png", headers={"Content-Disposition": f"attachment; filename=change_map.png"})
 
     except rasterio.RasterioIOError:
         raise HTTPException(status_code=422, detail="Could not read one or more raster files. Please ensure they are valid GeoTIFFs.")

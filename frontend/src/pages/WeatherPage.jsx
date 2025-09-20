@@ -18,44 +18,86 @@ export default function WeatherPage() {
     };
 
     return (
-        <div>
-            <h2 className="text-2xl font-semibold mb-4">🌤 Weather Data</h2>
-            <div className="flex gap-2 mb-4">
-                <input
-                    type="text"
-                    placeholder="Enter city..."
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    className="flex-1 border rounded-lg px-4 py-2"
-                />
-                <button
-                    onClick={fetchWeather}
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
-                >
-                    Get Data
-                </button>
-            </div>
-
-            {error && <p className="text-red-500">{error}</p>}
-
-            {weather && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-green-50 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">🌤 Current Weather</h3>
-                        <p><strong>City:</strong> {weather.current.city}</p>
-                        <p><strong>Temperature:</strong> {weather.current.temperature}°C</p>
-                        <p><strong>Humidity:</strong> {weather.current.humidity}%</p>
-                        <p><strong>Rainfall:</strong> {weather.current.rainfall} mm</p>
+        <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-25 to-teal-50 p-6">
+            <div className="max-w-4xl mx-auto">
+                <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
+                    <h2 className="text-3xl font-bold text-green-800 mb-6 flex items-center gap-3">
+                        🌤 <span>Weather Intelligence Dashboard</span>
+                    </h2>
+                    <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                        <input
+                            type="text"
+                            placeholder="Enter city name..."
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            className="flex-1 border-2 border-green-200 rounded-xl px-6 py-3 focus:outline-none focus:ring-4 focus:ring-green-100 focus:border-green-500 transition-all"
+                        />
+                        <button
+                            onClick={fetchWeather}
+                            className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-3 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold"
+                        >
+                            🔍 Get Weather Data
+                        </button>
                     </div>
-                    <div className="p-4 bg-blue-50 rounded-lg">
-                        <h3 className="font-semibold text-lg mb-2">📊 Historical Data</h3>
-                        <p><strong>City:</strong> {weather.historical.city}</p>
-                        <p><strong>Temperature:</strong> {weather.historical.temperature}°C</p>
-                        <p><strong>Humidity:</strong> {weather.historical.humidity}%</p>
-                        <p><strong>Rainfall:</strong> {weather.historical.rainfall} mm</p>
-                    </div>
+
+                    {error && (
+                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-xl mb-4 flex items-center gap-2">
+                            ⚠️ <span>{error}</span>
+                        </div>
+                    )}
                 </div>
-            )}
+
+                {weather && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div className="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-2xl shadow-lg border border-green-200">
+                            <h3 className="font-bold text-xl mb-4 text-green-800 flex items-center gap-2">
+                                🌤 <span>Current Weather</span>
+                            </h3>
+                            <div className="space-y-3">
+                                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <span className="font-medium text-green-700">🏙️ City:</span>
+                                    <span className="text-green-800 font-semibold">{weather.current.city}</span>
+                                </div>
+                                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <span className="font-medium text-green-700">🌡️ Temperature:</span>
+                                    <span className="text-green-800 font-semibold">{weather.current.temperature}°C</span>
+                                </div>
+                                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <span className="font-medium text-green-700">💧 Humidity:</span>
+                                    <span className="text-green-800 font-semibold">{weather.current.humidity}%</span>
+                                </div>
+                                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <span className="font-medium text-green-700">🌧️ Rainfall:</span>
+                                    <span className="text-green-800 font-semibold">{weather.current.rainfall} mm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bg-gradient-to-br from-teal-50 to-green-100 p-6 rounded-2xl shadow-lg border border-teal-200">
+                            <h3 className="font-bold text-xl mb-4 text-teal-800 flex items-center gap-2">
+                                📊 <span>Historical Analytics</span>
+                            </h3>
+                            <div className="space-y-3">
+                                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <span className="font-medium text-teal-700">🏙️ City:</span>
+                                    <span className="text-teal-800 font-semibold">{weather.historical.city}</span>
+                                </div>
+                                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <span className="font-medium text-teal-700">🌡️ Temperature:</span>
+                                    <span className="text-teal-800 font-semibold">{weather.historical.temperature}°C</span>
+                                </div>
+                                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <span className="font-medium text-teal-700">💧 Humidity:</span>
+                                    <span className="text-teal-800 font-semibold">{weather.historical.humidity}%</span>
+                                </div>
+                                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                                    <span className="font-medium text-teal-700">🌧️ Rainfall:</span>
+                                    <span className="text-teal-800 font-semibold">{weather.historical.rainfall} mm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

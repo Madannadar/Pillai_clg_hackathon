@@ -16,10 +16,14 @@ export const register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
 
-        const user = new User({ name, email, password: hash, provider: "local" });
+        // Define admin email and set role accordingly
+        const ADMIN_EMAIL = "admin@urbangreen.com";
+        const role = email === ADMIN_EMAIL ? "admin" : "user";
+
+        const user = new User({ name, email, password: hash, provider: "local", role });
         await user.save();
 
-        res.status(201).json({ message: "User registered" });
+        res.status(201).json({ message: "User registered", role });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Server error" });
@@ -29,13 +33,23 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
+        
+        // Define admin email
+        const ADMIN_EMAIL = "admin@urbangreen.com";
+        
         const user = await User.findOne({ email });
         if (!user || user.provider !== "local") return res.status(401).json({ error: "Invalid credentials" });
 
         const match = await bcrypt.compare(password, user.password);
         if (!match) return res.status(401).json({ error: "Invalid credentials" });
 
-        const payload = { id: user._id, email: user.email };
+        // Check if user is admin and update role if necessary
+        if (email === ADMIN_EMAIL && user.role !== "admin") {
+            user.role = "admin";
+            await user.save();
+        }
+
+        const payload = { id: user._id, email: user.email, role: user.role };
         const accessToken = signAccessToken(payload);
         const refreshToken = signRefreshToken(payload);
 
@@ -44,7 +58,16 @@ export const login = async (req, res) => {
         await user.save();
 
         // send tokens (for demo: JSON). In production send refresh token as HttpOnly cookie.
-        res.json({ accessToken, refreshToken, user: { id: user._id, email: user.email, name: user.name } });
+        res.json({ 
+            accessToken, 
+            refreshToken, 
+            user: { 
+                id: user._id, 
+                email: user.email, 
+                name: user.name, 
+                role: user.role 
+            } 
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: "Server error" });
@@ -64,31 +87,40 @@ export const googleLogin = async (req, res) => {
 
         const payload = ticket.getPayload(); // contains email, name, picture, etc.
         const email = payload.email;
+        const ADMIN_EMAIL = "admin@urbangreen.com";
+        
         let user = await User.findOne({ email });
 
         if (!user) {
             // create user if not exists (no password)
+            const role = email === ADMIN_EMAIL ? "admin" : "user";
             user = new User({
                 name: payload.name,
                 email,
                 provider: "google",
+                role
             });
             await user.save();
         } else {
+            // Update role if admin email
+            if (email === ADMIN_EMAIL && user.role !== "admin") {
+                user.role = "admin";
+                await user.save();
+            }
             // if existed but provider local and no google link, you might handle linking separately
             if (user.provider === "local") {
                 // optional: allow login both ways or create linking flow
             }
         }
 
-        const tokensPayload = { id: user._id, email: user.email };
+        const tokensPayload = { id: user._id, email: user.email, role: user.role };
         const accessToken = signAccessToken(tokensPayload);
         const refreshToken = signRefreshToken(tokensPayload);
 
         user.refreshTokens.push(refreshToken);
         await user.save();
 
-        res.json({ accessToken, refreshToken, user: { id: user._id, email: user.email, name: user.name } });
+        res.json({ accessToken, refreshToken, user: { id: user._id, email: user.email, name: user.name, role: user.role } });
     } catch (err) {
         console.error("Google login error:", err);
         res.status(500).json({ error: "Google login failed" });
@@ -111,7 +143,7 @@ export const refreshToken = async (req, res) => {
         }
 
         // issue new access token
-        const newAccessToken = signAccessToken({ id: user._id, email: user.email });
+        const newAccessToken = signAccessToken({ id: user._id, email: user.email, role: user.role });
         res.json({ accessToken: newAccessToken });
     } catch (err) {
         console.error("Refresh token error:", err);

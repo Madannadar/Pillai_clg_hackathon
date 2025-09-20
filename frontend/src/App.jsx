@@ -15,10 +15,16 @@ import ProfilePage from './pages/ProfilePage';
 import NGOPage from './pages/NGOPage';
 import PlantsPage from './pages/PlantsPage';
 import WeatherPage from './pages/WeatherPage';
+import DonatePage from "./components/DonatePage";
+import CreateCampaign from "./components/CreateCampaign";
+import AdminPage from "./pages/AdminPage";
 
 
 const App = () => {
   const isLoggedIn = !!localStorage.getItem("accessToken");
+  const userType = localStorage.getItem("userType");
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const isAdmin = user.role === "admin" || userType === "admin";
 
 
   return (
@@ -33,6 +39,9 @@ const App = () => {
         <Route path='/ngos' element={<NGOPage />} />
         <Route path='/plants' element={<PlantsPage />} />
         <Route path='/weather' element={<WeatherPage />} />
+        <Route path="/donate/:campaignId" element={<DonatePage />} />
+        <Route path="/create-campaign" element={<CreateCampaign />} />
+        <Route path="/admin" element={isAdmin ? <AdminPage /> : <Navigate to="/login" />} />
         <Route path="/home" element={isLoggedIn ? <Home /> : <Navigate to="/login" />} />
       </Routes>
     </Router>

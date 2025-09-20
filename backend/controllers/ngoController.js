@@ -1,6 +1,7 @@
 import NGO from "../models/NGO.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { verifyRefreshToken } from "../utils/jwt.js";
 
 // 🔹 NGO Register
 export const registerNGO = async (req, res) => {
@@ -94,5 +95,36 @@ export const verifyNGO = async (req, res) => {
     } catch (err) {
         console.error("NGO Verification Error:", err.message);
         res.status(500).json({ error: "Failed to verify NGO" });
+    }
+};
+
+export const getCurrentNGO = async (req, res) => {
+    try {
+        const ngo = await NGO.findById(req.user.id).select("name email");
+        if (!ngo) return res.status(404).json({ error: "NGO not found" });
+
+        res.json({ name: ngo.name, email: ngo.email });
+    } catch (err) {
+        console.error("Get NGO profile error:", err.message);
+        res.status(500).json({ error: "Failed to fetch NGO profile" });
+    }
+};
+
+export const logoutNGO = async (req, res) => {
+    try {
+        const { refreshToken } = req.body;
+        if (!refreshToken)
+            return res.status(400).json({ error: "Refresh token required" });
+
+        // Verify refresh token and get payload
+        const payload = verifyRefreshToken(refreshToken);
+
+        // Remove this refresh token from the NGO's record
+        await NGO.findByIdAndUpdate(payload.id, { $pull: { refreshTokens: refreshToken } });
+
+        res.json({ message: "Logged out" });
+    } catch (err) {
+        console.error("NGO logout error:", err);
+        res.status(400).json({ error: "Invalid token" });
     }
 };

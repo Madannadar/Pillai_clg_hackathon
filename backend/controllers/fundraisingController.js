@@ -10,12 +10,16 @@ export const createCampaign = async (req, res) => {
         if (!ngo) return res.status(404).json({ error: "NGO not found" });
         if (!ngo.isVerified) return res.status(403).json({ error: "Only verified NGOs can create campaigns" });
 
+        // Cloudinary uploads are handled automatically by multer
+        const images = req.files ? req.files.map(file => file.path) : [];
+
         const campaign = new FundraisingCampaign({
             ngo: ngoId,
             title,
             description,
             targetAmount,
             endDate,
+            images,
         });
 
         await campaign.save();
@@ -25,6 +29,7 @@ export const createCampaign = async (req, res) => {
         res.status(500).json({ error: "Failed to create campaign" });
     }
 };
+
 
 // 🔹 Donate to Campaign
 export const donateToCampaign = async (req, res) => {
@@ -61,6 +66,20 @@ export const getCampaigns = async (req, res) => {
         res.status(500).json({ error: "Failed to fetch campaigns" });
     }
 };
+
+// In fundraisingController.js
+export const getCampaignById = async (req, res) => {
+    try {
+        const { campaignId } = req.params;
+        const campaign = await FundraisingCampaign.findById(campaignId);
+        if (!campaign) return res.status(404).json({ error: "Campaign not found" });
+        res.json(campaign);
+    } catch (err) {
+        console.error("Get campaign error:", err.message);
+        res.status(500).json({ error: "Failed to fetch campaign" });
+    }
+};
+
 
 // 🔹 Get Campaigns by NGO
 export const getNGOCampaigns = async (req, res) => {

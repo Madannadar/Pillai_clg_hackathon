@@ -19,6 +19,7 @@ const ngoSchema = new mongoose.Schema({
         default: "pending"
     },
     verifiedAt: { type: Date },
+    rejectionReason: { type: String },
 
     createdAt: { type: Date, default: Date.now }
 });

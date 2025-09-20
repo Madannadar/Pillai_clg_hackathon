@@ -10,6 +10,7 @@ import authRoutes from "./routes/authRoutes.js";
 import ngoRoutes from "./routes/ngoRoutes.js"
 import fundraisingRoutes from "./routes/fundraisingRoutes.js"
 import adminRoutes from "./routes/adminRoutes.js"
+import plantRoutes from "./routes/plantRoutes.js"
 dotenv.config();
 
 const app = express();
@@ -27,6 +28,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/ngos", ngoRoutes);
 app.use("/api/campaigns", fundraisingRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/plant",plantRoutes)
 
 // ✅ Root route
 app.get("/", (req, res) => {

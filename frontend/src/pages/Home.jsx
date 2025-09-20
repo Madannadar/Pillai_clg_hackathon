@@ -53,7 +53,7 @@ export default function Home() {
                                 onClick={() => window.location.href = '/plants'}
                                 className="px-6 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-400 transition-colors"
                             >
-                                🌱 My Plants
+                                🌱 Plant Management
                             </button>
                             <button 
                                 onClick={() => window.location.href = '/ngos'}

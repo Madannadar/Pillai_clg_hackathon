@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const plantingSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: "User", // link to User
     required: true
   },

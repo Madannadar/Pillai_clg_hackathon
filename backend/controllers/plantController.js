@@ -53,6 +53,7 @@ export const getPlantRecommendations = async (req, res) => {
 export const createPlanting = async (req, res) => {
   try {
     const { userId, plantName, location } = req.body;
+    console.log(userId)
 
     // Validate input
     if (!userId || !plantName || !location || !location.latitude || !location.longitude) {
@@ -60,9 +61,7 @@ export const createPlanting = async (req, res) => {
     }
 
     // Optional: Check if user exists
-    const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ error: "User not found" });
-
+    
     // Create new Planting document
     const newPlanting = new Planting({
       userId,
@@ -88,18 +87,18 @@ export const createPlanting = async (req, res) => {
 // POST /plantings/user-plants
 export const getUserPlantings = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { user } = req.body;
 
-    if (!userId) {
+    if (!user) {
       return res.status(400).json({ error: "userId is required" });
     }
 
     // Optional: check if user exists
-    const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ error: "User not found" });
+    const user1 = await User.findById(userId);
+    if (!user1) return res.status(404).json({ error: "User not found" });
 
     // Find all plantings for the user
-    const plantings = await Planting.find({ userId })
+    const plantings = await Planting.find({ user1 })
       .select("plantName plantedAt status growthTracking") // only required fields
       .sort({ plantedAt: -1 }); // latest first
 
